@@ -92,4 +92,16 @@ def create_posts(PayLoad: dict=Body(...)):
 - Pydantic Models
 
 	- **Pydantic** is a Python library used for **data validation and parsing using type annotations**.
+	- ![](Pasted%20image%2020260314181541.png)
 
+
+- **POST Method**
+	- ![](Pasted%20image%2020260314181615.png)
+	- `newPost.title` prints only the title 
+	- `newPost.content` print only the content
+	- API Call
+		- ![](Pasted%20image%2020260314181832.png)
+	- Output:
+		- ![](Pasted%20image%2020260314181957.png)
+- 
+	
