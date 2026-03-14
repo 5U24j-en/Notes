@@ -1,0 +1,250 @@
+{
+  "main": {
+    "id": "aed4aa6cb312fc41",
+    "type": "split",
+    "children": [
+      {
+        "id": "dad44819931e5956",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a496575b611ec240",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "FastAPI/Fast API.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Fast API"
+            }
+          },
+          {
+            "id": "99713db76fea0298",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Drawing 2026-03-14 16.17.44.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2026-03-14 16.17.44.excalidraw"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c9e2a31b11483230",
+    "type": "split",
+    "children": [
+      {
+        "id": "085bd9605cfc93e2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c5cb7a1999ccd504",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "4156aedb9af91f06",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          },
+          {
+            "id": "774fc9af85b5fbb8",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "dbc762cc5a1c217d",
+    "type": "split",
+    "children": [
+      {
+        "id": "fc484ae88f5a7820",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2036746e30374892",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Data Engineering/Data Engineering.md",
+                "collapseAll": true,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Data Engineering"
+            }
+          },
+          {
+            "id": "0f43176c9a08c121",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Data Engineering/Data Engineering.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Data Engineering"
+            }
+          },
+          {
+            "id": "74fc4af43945c925",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "33023dad6a78959c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Environment Variables.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Environment Variables"
+            }
+          },
+          {
+            "id": "76ed4d78c1b1ca1a",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "table-editor-obsidian:Advanced Tables Toolbar": false,
+      "switcher:Open quick switcher": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "graph:Open graph view": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "webpage-html-export:Export as HTML": false
+    }
+  },
+  "active": "a496575b611ec240",
+  "lastOpenFiles": [
+    "attachments/Pasted image 20260314162456.png",
+    "Excalidraw/Drawing 2026-03-14 16.17.44.excalidraw.md",
+    "attachments/Pasted Image 20260314161821_365.png",
+    "Excalidraw/Apache Spark 2026-01-19 19.23.53.excalidraw.md",
+    "FastAPI/Fast API.md",
+    "attachments/Pasted image 20260314160056.png",
+    "attachments/Pasted image 20260312215217.png",
+    "attachments/Pasted image 20260312172246.png",
+    "attachments/Screenshot from 2026-03-12 17-08-59.png",
+    "attachments/Screenshot from 2026-03-12 17-08-01.png",
+    "attachments/Pasted image 20260312170443.png",
+    "PySpark/Apache Spark 2.md",
+    "attachments/Pasted image 20260311195513.png",
+    "attachments/Pasted image 20260311175431.png",
+    "Data Engineering/Data Engineering Fundamentals.md",
+    "attachments/Pasted image 20260311173543.png",
+    "PySpark/Apache Spark.md",
+    "Cloud Computing/Cloud Computing Upgrad/AWS CLF - C02 - part 2.md",
+    "Cloud Computing/Cloud Computing Upgrad/AWS Cloud Practitioner.md",
+    "Machine Learning/Linear Regression.md",
+    "Machine Learning/Regularization/Regularization.md",
+    "Deep Learning/Untitled.md",
+    "Machine Learning/SVM/Untitled.md",
+    "Deep Learning",
+    "Machine Learning/Machine Learning.md",
+    "Machine Learning/SVM",
+    "Machine Learning/Untitled.md",
+    "NLP/Natural Language Processing (NLP).md",
+    "Machine Learning/Decision Tree/Classification Tree.md",
+    "Machine Learning/Decision Tree/Decision Tree.md",
+    "Machine Learning/Logistic Regression/Logistic Regression.md",
+    "Machine Learning/Logistic Regression/Multi-class Classification.md",
+    "Machine Learning/Regularization/Cross Validation (k folds ).md",
+    "Machine Learning/Regularization/Parameter and Hyperparameters.md",
+    "Machine Learning/Decision Tree/Regression Tree.md",
+    "NLP/Roadmap - NLP.md",
+    "Machine Learning/Ensembles/Ensembles.md",
+    "Cloud Computing/Cloud Computing Upgrad/Cloud Computing Basics Upgrad.md",
+    "EDML",
+    "DSA",
+    "Databricks",
+    "Untitled.canvas",
+    "Untitled.base",
+    "Untitled 1.canvas",
+    "Data Engineering",
+    "System Design/Untitled",
+    "NLP",
+    "Networking Fundamentals"
+  ]
+}
