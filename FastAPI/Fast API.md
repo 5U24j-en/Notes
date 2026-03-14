@@ -103,5 +103,5 @@ def create_posts(PayLoad: dict=Body(...)):
 		- ![](Pasted%20image%2020260314181832.png)
 	- Output:
 		- ![](Pasted%20image%2020260314181957.png)
-- 
-	
+		- ![](image-1.png)
+		

@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "a496575b611ec240",
+            "id": "99713db76fea0298",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -19,18 +19,6 @@
               },
               "icon": "lucide-file",
               "title": "Fast API"
-            }
-          },
-          {
-            "id": "99713db76fea0298",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Drawing 2026-03-14 16.17.44.excalidraw.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Drawing 2026-03-14 16.17.44.excalidraw"
             }
           }
         ]
@@ -52,7 +40,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "202603",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -91,7 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 355.5
   },
   "right": {
     "id": "dbc762cc5a1c217d",
@@ -196,26 +184,26 @@
       "webpage-html-export:Export as HTML": false
     }
   },
-  "active": "a496575b611ec240",
+  "active": "99713db76fea0298",
   "lastOpenFiles": [
+    "attachments/image-1.png",
+    "attachments/attachmentsimage.png.png",
+    "attachments/test.png",
+    "attachments/.png",
+    "attachments/image.png",
+    "attachments/{notename}-{timestamp}-1.png",
+    "attachments/Pasted image 20260314184650.png",
+    "attachments/{notename}-{timestamp}.png",
+    "Excalidraw/Drawing 2026-03-14 16.17.44.excalidraw.md",
+    "FastAPI/Fast API.md",
     "attachments/Pasted image 20260314181957.png",
     "attachments/Pasted image 20260314181832.png",
     "attachments/Pasted image 20260314181806.png",
-    "attachments/Pasted image 20260314181615.png",
-    "attachments/Pasted image 20260314181541.png",
     "PySpark/Apache Spark.md",
-    "FastAPI/Fast API.md",
     "Cloud Computing/Cloud Computing Upgrad/AWS CLF - C02 - part 2.md",
-    "Excalidraw/Drawing 2026-03-14 16.17.44.excalidraw.md",
     "Pasted.md",
     "README.md",
-    "attachments/Pasted image 20260314162456.png",
-    "attachments/Pasted Image 20260314161821_365.png",
     "Excalidraw/Apache Spark 2026-01-19 19.23.53.excalidraw.md",
-    "attachments/Pasted image 20260314160056.png",
-    "attachments/Pasted image 20260312215217.png",
-    "attachments/Pasted image 20260312172246.png",
-    "attachments/Screenshot from 2026-03-12 17-08-59.png",
     "PySpark/Apache Spark 2.md",
     "Data Engineering/Data Engineering Fundamentals.md",
     "Cloud Computing/Cloud Computing Upgrad/AWS Cloud Practitioner.md",
