@@ -104,5 +104,23 @@ def create_posts(PayLoad: dict=Body(...)):
 	- Output:
 		- ![](Pasted%20image%2020260314181957.png)
 
+	- Data Validation
+		- ![](../attachments/Screenshot%20from%202026-04-03%2022-11-24.png)
+		- Normal Response
+			- ![](../attachments/Screenshot%20from%202026-04-03%2022-08-21.png)
+			- ![](../attachments/Screenshot%20from%202026-04-03%2022-08-55.png)
+		- Error response due to invalid rating datatype
+			- ![](../attachments/Screenshot%20from%202026-04-03%2022-09-46.png)
+			- ![](../attachments/Screenshot%20from%202026-04-03%2022-10-56.png)
 
-![](../attachments/Pasted%20image%2020260314190218.png)
+- #### CRUD Operation
+	- ![](../attachments/Screenshot%20from%202026-04-03%2022-14-05.png)
+	- PUT 
+		- Sending the Entire Field and updating 
+	- PATCH 
+		- Sending only the required Fields 
+
+
+- `@app.get("/posts/{id}")` - > Path Parameter
+- ![304](../attachments/Screenshot%20from%202026-04-03%2022-55-14.png)
+- Path Parameter always returns a string , hence we need to typecast id to integer
