@@ -16,7 +16,7 @@ Video: https://youtu.be/0sOvCWFmrtA?si=ZLZ0BLEG7vqej5Z9
 - To run the environment there is a activate file in bin.
 - ![[Pasted image 20260312172246.png]]
 ```
-source myenvp1/bin/activate
+source .venv/bin/activate
 ```
 
 
@@ -323,9 +323,10 @@ def create_posts(PayLoad: dict=Body(...)):
 	- Initialize a function to start and close a db connection
 		- ![](../attachments/Screenshot%20from%202026-04-06%2015-23-34.png)
 
-- Testing the **API/DB Call**
+- Testing the **API/DB Call** - ( Dependencies Injection
 	- New get API call
 		- ![](../attachments/Screenshot%20from%202026-04-06%2015-36-26.png)
+		- **NOTE : `Session = Depends(get_db)` is called Dependencies Injection**
 	- Once we save and restart our webserver ( uvicorn ), a new table should be created because of 
 		- `models.Base.metadata.create_all(bind=engine)`
 
@@ -356,3 +357,77 @@ NOTE : The `models.py` can create table only once , if you need to make any chan
 	- ![](../attachments/Screenshot%20from%202026-04-06%2018-47-39.png)
 	- OUTPUT
 		- ![](../attachments/Screenshot%20from%202026-04-06%2018-46-46.png)
+
+### SQLalchemy Model vs Pydantic Model
+
+- **Pydantic/Schema Model**
+	- Defines the structure of the request and response
+	- ![](../attachments/Screenshot%20from%202026-04-07%2021-25-43.png)
+	- This ensure that the content of the API call have the right content
+	- Kind of adding validations to the variables of an API 
+
+- **SQL Alchemy Model** - the `model.py` file
+	-  Responsible  for **defining** the **columns of the posts table** in postgres
+	- Used for Database functions
+
+##### Just like how we created a separate file for our SQL Alchemy Models we should create a separate file for our Pydantic Models Schema
+
+- ![](../attachments/Pasted%20image%2020260407213811.png)
+
+- `schemas.py` - **content**
+
+```
+from pydantic import BaseModel
+
+class Post(BaseModel):
+
+# Required Fields
+title: str
+content: str
+
+#Optional Fields with Default Values
+published: bool = True  
+```
+
+- Since its a new module , you need to import in main file
+- `from . import models, schemas # . means current directory`
+- Whenever we are using a variable from the module we need to call it as 
+	- ` schemas.post `
+- ![](../attachments/Screenshot%20from%202026-04-07%2021-43-59.png)
+
+### Response 
+
+- In the current code for the Response we are just sending the entire **post** dictionary
+- But In many cases we want to **control the contents** of the response.
+- We can create a Schema for the Response as well.
+- We can create multiple schema's for different Response so that the front end get only the required data.
+- eg. 
+	- when user logs in we don't want to return the users password to the front end, but the 
+	- user model will have the password.
+
+**USE CASE 1 :** Response should only return id and title
+- Defining new `responseSchema` in `schemas.py`
+	- ![](../attachments/Screenshot%20from%202026-04-07%2022-04-07.png)
+- Right now the API calls are returning the dictionary , we want return the schema itself
+	- Updating return 
+		- ![](../attachments/Pasted%20image%2020260407220820.png)
+- REQUIRED STEP: Adding **response_model** in the decorator
+	- ![](../attachments/Pasted%20image%2020260407221409.png)
+	- This is for all the APIs which returns data
+- **NOTE: The API calls will still return a ERROR because the return function expects a dictionary but we are passing a Pydantic Model**
+	- To correct this we need to add a change in the schema
+	- The below code safely converts the **SQLalchemy model to the Dictionary**
+		- ![](../attachments/Screenshot%20from%202026-04-07%2022-41-46.png)
+- FINAL CHANGE:
+	- The GET - posts API is returning a list of the schema
+	- so we need to change it in the decorator
+		- ![](../attachments/Screenshot%20from%202026-04-07%2022-43-52.png)
+
+- **OUTPUT**
+	- ![](../attachments/Screenshot%20from%202026-04-07%2022-44-09.png)
+- **INHERITANCE**
+	- We will change the response model to the original output
+	- ![](../attachments/Screenshot%20from%202026-04-07%2022-46-38.png)
+	- **OUTPUT**:
+		- ![](../attachments/Screenshot%20from%202026-04-07%2022-47-21.png)
+

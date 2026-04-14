@@ -163,7 +163,7 @@ WORKER NODE
 - Action commands are - .show(), .count(), .collect() , etc.
 - This entire process is a Spark Job.
 
-Lazy Evaluation Demo
+**Lazy Evaluation Demo**
 
 Code :
 
