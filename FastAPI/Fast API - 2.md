@@ -178,6 +178,11 @@
 	- Protected API Updates
 		- ![](../attachments/Screenshot%20from%202026-04-14%2020-34-07.png)
 
+	- #### POSTMAN
+		- **First Call the Login API to get the token**
+			- ![](../attachments/Screenshot%20from%202026-04-14%2020-39-52.png)
+		- **Paste the Token in POST API auth tab to access securely**
+			- ![](../attachments/Screenshot%20from%202026-04-14%2020-40-38.png)
 **Flowcharts** 
 
 **Login Route**
@@ -185,3 +190,28 @@
 
 **Protected API route**
 ![](../attachments/Screenshot%20from%202026-04-14%2020-24-01.png)
+
+
+### POSTMAN - Adding Environment
+
+- Environments
+	- Create an Environment
+		- ![](../attachments/Screenshot%20from%202026-04-14%2020-58-47.png)
+	- Add the URL
+	- Go the API , Select the Environment and ADD the Variable
+	- ![](../attachments/Pasted%20image%2020260414205950.png)
+	- Now we can change from PRODUCTION Environment to DEVELOPMENT Environment without touching the API link.
+	- Prod will have Public Domain IP
+
+- Auto Setup of setting the token from login to Protected API
+	- Go to **Login API** 
+		- **Scripts Tab and select Post - Response Script**
+		- ![](../attachments/Screenshot%20from%202026-04-14%2021-10-36.png)
+		- Got to snippets and check for `Set an environment variable`
+	- Create a Variable JWT
+		- ![](../attachments/Screenshot%20from%202026-04-14%2021-11-15.png)
+	- Reference the JWT variable in the Auth Type token filed in the Protected post API
+		- ![](../attachments/Screenshot%20from%202026-04-14%2021-11-44.png)
+	- Now we only need to call the login API everytime to access the Token and no need to copy it as it will automatically copy it
+	- The Postman script will do this automatically
+	
