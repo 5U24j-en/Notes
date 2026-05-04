@@ -110,6 +110,7 @@ DAG: ( AQE NOT DISABLED , hence output is different)
 - Hash function is applied to the join key -> hash(customer_id)
 - For every single row of data, the HashPartitioner runs this basic formula:
 	`Target_Partition_ID = Hash(Key) % Number_of_Shuffle_Partitions`
+	- NOTE : If the foreign keys are string or anything , a hash function is performed which converts the key -> the output of hash function is a integer where MOD of partition can happen
 - ![[Pasted image 20260311173543.png]]
 - All JOINS follow the Same process Till **Shuffled State** 
 
@@ -128,8 +129,16 @@ DAG: ( AQE NOT DISABLED , hence output is different)
 	-  Use Cases
 		- Used for **large datasets**.
 		- Works best when data is **already sorted or partitioned**.
+	- ![](../attachments/Screenshot%20from%202026-04-27%2017-54-24.png)
+	- ![](../attachments/Screenshot%20from%202026-04-27%2017-57-55.png)
+	- ![](../attachments/Screenshot%20from%202026-04-27%2017-58-34.png)
 
--  **Shuffle Hash Join**
+#### NOTE : Types of Exchanges
+	- Shuffle exchange - complete reshuffling of data between partitions
+	- Broadcast exchange - The Spark driver collects a small table and sends a copy of it to every executor in the cluster.
+
+
+- **Shuffle Hash Join**
 
 	- After Shuffle , A Hash Table is created of the Smaller Table
 	- The Data-frames in the Partition are joined by Mapping
@@ -142,5 +151,164 @@ DAG: ( AQE NOT DISABLED , hence output is different)
 	- When 1 data set is very small and it completely fits in a Partition
 	- The Driver Node then broadcast the Partition to other executor Nodes.
 	- No Shuffling happens as we are just broadcasting an entire partition to other nodes.
+	- **A table with Size less than 10 MB  can be broadcasted** - small table
+	
 	- ![[Pasted image 20260311195513.png]]
-	- 
+	- ![](../attachments/Screenshot%20from%202026-04-27%2018-06-47.png)
+	- ![](../attachments/Screenshot%20from%202026-04-27%2018-07-27.png)
+
+- ### Adjusting Size of Broadcast
+	- `spark.conf.get("spark.sql.autoBroadcastJoinThreshold")`
+		- This will show the current config
+		- A couple of useful clarifications:
+			- The value is in **bytes**
+			- Default is usually **10 MB** (i.e., `10485760`)
+			- If it returns `-1`, it means **broadcast joins are disabled**
+	- `spark.conf.set("spark.sql.autoBroadcastJoinThreshold", <size in bytes> ) `
+
+### Spark SQL Engine
+
+- **Unresolved Logical Plan**
+	- Your Query without confirming if the tables , columns are actually present or NOT.
+- **Catalog has the Metadata**
+	- Example: 
+		- You have selected a column in Spark
+		- But the columns does not exist
+		- This happens because **Catalog does a small Analysis** and throws a **Analysis Exception**.
+- **Resolved Logical Plan**
+	- After Verifying that the columns , tables , etc are all valid. This is called Resolved Logical Plan
+- **Optimized Logical Plan**
+	- Spark Optimizes the code
+- **Physical Plan**
+	- Multiple Execution plans created based on the Optimized Logical Plan
+	- **Cost Model** - Takes in all the Physical Plans and then Gives the least Expensive plan (computation , space , etc) - ie - Best Execution Plan
+
+
+### Driver Memory Management
+
+![](../attachments/Pasted%20image%2020260425024118.png)
+
+#### Driver OOM ( Out Of Memory )
+
+- **Drivers Heap memory Will broadcast the Broadcast Variables**
+
+- #### Main Reasons for Driver OOM
+	- **If Broadcast variable is more than the Heap Memory then OOM error**
+	- CRITICAL commands such as **`df.collect()`** , executors send all data from **ALL EXECUTORS to the DRIVER**.
+
+- If all executor sends data to driver then there is **OOM Error**
+- ##### Example
+	- Starting Spark
+		- ![](../attachments/Screenshot%20from%202026-04-27%2017-09-28.png)
+		- ![](../attachments/Screenshot%20from%202026-04-27%2017-10-28.png)
+		- No Driver Memory in Spark UI
+	- Setting Up a Driver Memory
+		- Exit 
+		- And Execute 
+			- ![](../attachments/Screenshot%20from%202026-04-27%2017-12-22.png)
+		- **UI** 
+			- ![](../attachments/Screenshot%20from%202026-04-27%2017-13-11.png)
+		- Hence we have allocated 1 GB of Memory
+	- Now Lets create a very large Dataframe
+		- ![](../attachments/Screenshot%20from%202026-04-27%2017-15-17.png)
+		- **df.show()** by default only returns 20 records
+		- **df.collect()** will return all the records to the driver ( very dangerous command)
+		- ![](../attachments/Screenshot%20from%202026-04-27%2017-17-32.png)
+		
+	```
+	26/04/27 17:16:18 ERROR Executor: Exception in task 10.0 in stage 1.0 (TID 11)
+	java.lang.OutOfMemoryError: Java heap space
+	```
+	- #### Driver Memory Tags
+		- `spark.driver.memory`
+			- JVM process
+		- `spark.driver.memoryOverhead`
+			- NON JVM
+			- container
+### Executor Memory Management
+
+![](../attachments/Pasted%20image%2020260425022142.png)
+
+![](../attachments/Pasted%20image%2020260425030116.png)
+## Total Memory = 11 GB
+
+![](../attachments/Pasted%20image%2020260425022754.png)
+
+![](../attachments/Pasted%20image%2020260425022745.png)
+
+### Unified Memory
+
+- Execution Memory used for Execution ( Temporary Storage ) and Storage Memory for ( Persistent Cache) Cache storage
+- The separation between both Memory is Dynamic , so if Execution Memory is full it will take from Storage Memory
+- **If Storage Memory is also full and there is NEED FOR EXECUTION MEMORY, MEMORY FROM STORAGE MEMORY IS EVICTED USING LRU ALGORIGHTM**
+- LRU ( Least Used Data ( Cached Data) )
+- Executor Memory has authority to Evict data from Storage Memory
+- Storage Memory can Borrow Empty memory from Executor Memory.
+### OFF HEAP MEMORY
+
+- There will be **Garbage Collect (GC) cycles** happening in the **On-heap Memory**
+- During the GC cycle, the program will me stopped , in this case **Off-Heap Memory can help**
+- **Off-Heap Memory is managed by the Operating system.**
+- Since GC are not managing the variables , it is the **programmers job to allocated and de - allocate memory**
+- Off-Heap memory is slower than On-Heap memory
+
+
+### Skewed Data
+
+- Imagine you have a Product Category Column
+- If one of the category in in 80% of the Data , then it is skewed.
+### Executor OOM ( Out of Memory )
+
+- When the Data is skewed and a single partition in a `groupby()` event has more size than a single executor
+- #### Salting is used to Fix this issue
+
+### Salting - Technique to eliminate the Skew-ness
+
+- ![](../attachments/Pasted%20image%2020260427183915.png)
+- If Data is Skewed
+- we can create sub partitions of the skewed Data, and it can optimize memory by enabling Memory Disk slip
+
+
+## Caching
+
+- When we write a code 
+```
+df1 = read()
+df2=df1.filter()
+df3=df2.groupBy()
+```
+- Spark creates a DAG
+- **And Spark will create df1 each time.**
+- ![](../attachments/Pasted%20image%2020260427212446.png)
+- Each time , **df1** is processed and created in memory and then the rest executes
+- But using caching we can store **df1** in storage memory and it will utilize it from there
+- ![](../attachments/Pasted%20image%2020260427212817.png)
+- ![](../attachments/Screenshot%20from%202026-04-27%2021-37-50.png)
+- ![](../attachments/Pasted%20image%2020260427213947.png)
+	- ignore new_col as it was created before
+	- But as per the PLAN we can see that `Yest AS Flag#10` , a new column is created again
+- ##### Caching
+	- ![](../attachments/Pasted%20image%2020260427214303.png)
+	- **We are not creating a new Column in DAG**
+	- ![](../attachments/Pasted%20image%2020260427214338.png)
+- **ONLY CACHE if the Dataframe is small and we are using the small DF multiple times**
+## Persist
+
+- `df.cache() = df.persist(StorageLevel.MEMORY_AND_DISK)`
+- ALL TYPE of caching is basically the persist command
+- `cache()` is a special use case.
+- `cache()` 
+	- Tries to store in memory first
+	- If memory is not enough , spill the rest to the disk
+
+- **Storage LEVELS -**
+	- **MEMORY_AND_DISK**
+	- **MEMORY_ONLY**
+		- Data only in RAM
+		- If RAM is less memory , it will be recompute 
+	- **DISK_ONLY**
+	- **MEMORY_ONLY_2**
+		- Data is replicated 2 times , for data tolerance
+	- **OFF_HEAP**
+		- We can use OFF_HEAP memory instead of RAM 
+		- Note GC wont work , we need to maintain the memory

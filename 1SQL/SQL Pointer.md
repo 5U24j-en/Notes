@@ -1,0 +1,2 @@
+- Simple Sub-queries are efficient but Correlated Sub-queries are inefficient and USE JOINS
+- JOINS as faster than correlated Sub-queries

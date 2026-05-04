@@ -252,7 +252,7 @@ Types of Transformations
 	- Example: GroupBy
 
 Narrow Transformation:
-- The function on each partition is not dependent on the other partitions
+- The function on each partition is **not** dependent on the other partitions
 - Like, you filtering data can be done to each partition independently
 
 Wide Transformation:
@@ -290,7 +290,7 @@ Default Block Size = 128 MB
 - Uses hash partitioning
 - Data moves across executors
 - Shuffle partitions are created
-![[Pasted image 20251217001627.png]]
+![[Pasted image 20251217001627.png|507]]
 ### `coalesce()` → **Usually NO shuffle** 
 
 > `coalesce()` **reduces the number of partitions without a full shuffle** by merging existing partitions.
@@ -328,6 +328,7 @@ Video: https://youtu.be/761SQ9Hxbic?si=3bvA1J9E4ENfwz_t
 
 ![[Pasted image 20260114161030.png]]
 
+```
 == Parsed Logical Plan == 
 'Filter '`>`('release_year, 2010) 
 	+- 'Project ['title, 'studio, 'imdb_rating] 
@@ -359,6 +360,8 @@ The query is fully supported by Photon.
 	missing = 
 	partial   = 
 	full          = movies
+
+```
 
 
 # Execution
