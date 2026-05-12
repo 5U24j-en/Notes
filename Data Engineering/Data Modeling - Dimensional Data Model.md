@@ -106,6 +106,85 @@
 				This is called an **UPSERT**.
 
 
-
-
 ![](../attachments/Pasted%20image%2020260504224611.png)
+
+
+## Dimensional Table
+
+![](../attachments/Pasted%20image%2020260504235901.png)
+- #### Fact Table
+	- Pure Core numerical Values
+- #### Dimension Table
+	- Context of the numerical values
+	- Each context will be a dimension 
+
+- Example
+	- You need to find aggregation OR any function with respect to Revenue .
+		- Single revenue column can work with multiple Context tables
+
+
+### Surrogate Key
+
+- A **surrogate key** is:
+	- A **new, system-generated unique identifier** (usually integer)
+	- Used as the **primary key in dimension tables**
+	- Used to **join fact and dimension tables**
+- **Natural keys (like email, product code, etc.) have problems:**
+	- Can change over time ❌
+	- Can be large (strings) → slow joins ❌
+	- May not be unique globally ❌
+- **Surrogate keys solve this:**
+	- Always stable 
+	- Small & fast (integers) 
+	- Controlled by system
+
+- Example - In the Orders table which we have created
+	- ![](../attachments/Pasted%20image%2020260505093758.png)
+	- **Customer related details can be a Dimension**
+
+```sql
+SELECT
+	*,
+	ROW_NUMBER() OVER(ORDER BY customer_id) AS DimCustomerKey
+FROM(
+	SELECT
+		DISTINCT(customer_id),
+		customer_email,
+		customer_name,
+		Customer_Name_Upper
+	FROM datamodeling.silver.silver_table) e;
+```
+
+- `DimCustomerKey` is the **Surrogate Key**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Types of Fact Table
+
+- **Transactional Fact Tables**
+	- 1 row = 1 transaction
+- **Periodic Fact Table**
+	- Stores **aggregated data at fixed time intervals**
+	- Each row represents a period of time (day/week/month)
+- **Accumulating Fact Table**
+	- Describes the journey of the data
+	- Tracks the **lifecycle of a process**
+	- **One row per entity**, updated over time
+	- ![](../attachments/Pasted%20image%2020260505110542.png)
+
+
+### Types of Dimensions
+
+- Conformed Dimensions
+	- 

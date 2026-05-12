@@ -73,14 +73,66 @@ Key Global Services
 -  **Users** are people withing the organization ( can be grouped )
 -  ![[Pasted image 20260121154916.png]]
 
-- **IAM Policy**
+- #### **IAM Policy**
 
 	- User/Groups are assigned JSON Documents called Policies
 
-	- ![[Pasted image 20260121155027.png]]
-	- ![[Pasted image 20260305151424.png]]
+	- #### **Identity Based Policy**
+		- It Answers: What actions is this user/role allowed to perform
+		- Attached to:
+			- IAM User
+			- IAM Group
+			- IAM Role
+		- Identity policies do **not** contain: `Principle`
+		- The IAM user/role can read objects from `mybucket`
+```json
+{  
+	"Effect": "Allow",  
+	"Action": "s3:GetObject",  
+	"Resource": "arn:aws:s3:::mybucket/*"  
+}
+```
+- 	
+	- **Sample**:
+	-  ![[Pasted image 20260121155027.png]]
+- 
+	- #### **Resource Based Policy**
+		- Attached directly to a resource like:
+			- S3 bucket
+			- SNS topic
+			- SQS queue
+			- KMS 
+		- It Answers: Who is allowed to access this resource
+		- AWS account `123456789012` can access objects in the bucket
+```json
+{
+  "Effect": "Allow",
+  "Principal": {
+    "AWS": "arn:aws:iam::123456789012:root"
+  },
+  "Action": "s3:GetObject",
+  "Resource": "arn:aws:s3:::mybucket/*"
+}
+```
+
+- 
+	- **Sample:**	
+	 ![[Pasted image 20260305151424.png]]
 	- ![[Pasted image 20260305151634.png]]
+
+- ##### Real AWS Example
+
+	- ##### Same Account Access
+		- Usually only identity-based policy is enough.
+		**Example:**
+		- **EC2** role accesses **S3** bucket in same account.
 	
+	-  **Cross-Account Access**
+		Often requires:
+		1. Identity-based policy
+		2. Resource-based policy
+		**Example:**
+		- **Account A** role wants access to **Account B** `**S3** *bucket*`.
 	
 - ![[Pasted image 20260121155655.png]]
 - **Inline policies** are Policies specifically for a single user.
@@ -186,9 +238,9 @@ Key Global Services
 		-  Downloading common files 
 	- Runs with the Root User
 
-Sample EC2 User Data Script
+Sample EC2 User Data Script 
 
-```
+```bash
 #!/bin/bash  
 # Use this for your user data ( script from top to bottom)  
 # install httpd (Linux 2 version)  
@@ -305,12 +357,12 @@ echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
 
 - #### EC2 Instance Purchasing Options
 
-	- On Demand
+	- **On Demand**
 		-  Short Workload and un-interrupted Workloads
 		-  Pay by Second
 		-  Highest cost but no Upfront payment
 
-	- Reserved ( 1 & 3 Years )
+	- **Reserved ( 1 & 3 Years )**
 		-  Long Workloads
 		-  Highly discounted compared to On-demand
 		-  You reserve instance attribute - Type, Region, OS, Tenacy
@@ -319,12 +371,12 @@ echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
 		-  Scope - Regional or Zonal
 		-  You can buy and sell in  Reserved Instance Marketplace
 
-	- Convertible Reserved Instance
+	- **Convertible Reserved Instance**
 		- Long workloads with Flexible Instances
 		-  Flexible scope, OS, tenancy
 		-  Less discount compared to Reserved
 
-	- Savings Plans ( 1 & 3 Years )
+	- **Savings Plans ( 1 & 3 Years )**
 		- Commitment to an amount of usage
 		-  Long Workload
 		-  Commit to a certain Usage like 10$/hr or 3 years
@@ -334,7 +386,7 @@ echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
 			- OS
 			- Tenancy
 
-	- Spot Instance
+	- **Spot Instance**
 		- The best Discount
 		- Short Workloads
 		- Cheap
@@ -347,9 +399,8 @@ echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
 		- Not FOR 
 			- DB
 			-  Critical JOBS
-			
 
-	- Dedicated Hosts
+	- **Dedicated Hosts**
 		-  Book an entire physical server
 		-  Control instance placements
 		- Purchasing Options
@@ -359,19 +410,16 @@ echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
 		- For strong Regulatory or Compliance 
 		- Complex Software licensing
 
-	- Dedicated Instance
+	- **Dedicated Instance**
 		- No other customer will share your hardware
 		- ![[Pasted image 20260203162339.png]]
 
-	-  Capacity Reservation
+	-  **Capacity Reservation**
 		- Reserve capacity in a specific AZ for any duration
-
-	- ![[Pasted image 20260203162643.png]]\
+	- ![[Pasted image 20260203162643.png]]
 
 - #### Shared Responsibility Model - EC2
-
 	-  ![[Pasted image 20260203162928.png]]
-
 
 
 ### EBS ( Elastic Block Storage)
@@ -400,7 +448,6 @@ echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
 		- Recycle Bin for EBS snapshots
 			- Retention - 1 day to 1 year
 
-
 ### AMI - Amazon Machine Image
 
 - AMI are customization of an EC2 Instance
@@ -408,7 +455,7 @@ echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
 	- Faster boot/config since all software is pre packaged
 - Example:
 	- You create an EC2 instance and using User data script install Apache web server.
-	- ```
+	- ```bash
 	    #!/bin/bash  
 		# Use this for your user data ( script from top to bottom)  
 		# install httpd (Linux 2 version)  

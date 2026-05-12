@@ -4,37 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "191a54b60255a7a1",
+        "id": "4e5b6a57e6d8b542",
         "type": "tabs",
         "children": [
           {
-            "id": "c03d98a6dc7a7b1a",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Data Modeling.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Data Modeling"
-            }
-          },
-          {
-            "id": "1183f7d2ae3c5cb6",
+            "id": "8d8d0338cb108224",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Data Engineering/Data Modeling - Dimensional Data Model.md",
+                "file": "PySpark/Apache Spark.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Data Modeling - Dimensional Data Model"
+              "title": "Apache Spark"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -197,46 +184,46 @@
       "webpage-html-export:Export as HTML": false
     }
   },
-  "active": "1183f7d2ae3c5cb6",
+  "active": "8d8d0338cb108224",
   "lastOpenFiles": [
-    "attachments/Pasted image 20260504225224.png",
+    "FastAPI/Fast API - 2.md",
+    "PySpark/Apache Spark 2.md",
+    "Cloud Computing/Docker.md",
+    "Data Engineering/Kafka.md",
+    "attachments/Pasted image 20260510115924.png",
+    "attachments/Pasted image 20260510114132.png",
+    "PySpark/Apache Spark.md",
+    "Data Engineering/Open Table Format  - Delta Table.md",
+    "Cloud Computing/Cloud Computing Upgrad/AWS CLF - C02 - part 2.md",
+    "Cloud Computing/Cloud Computing Upgrad/AWS Cloud Practitioner.md",
+    "Excalidraw/Delta Lake.md",
+    "Data Engineering/weather_ETL.md",
+    "Data Engineering/Data Engineering Fundamentals.md",
+    "attachments/Pasted image 20260508150537.png",
+    "attachments/Pasted Image 20260508144549_851.png",
+    "attachments/Pasted image 20260508142257.png",
+    "attachments/Pasted image 20260508141855.png",
+    "attachments/Pasted image 20260508122108.png",
+    "attachments/Pasted image 20260508122022.png",
+    "attachments/Pasted image 20260508120103.png",
+    "attachments/Pasted image 20260508120028.png",
+    "System Design/High Level System Design.md",
+    "System Design/Horizontal vs Vertical Scaling.md",
+    "System Design/Load Balancing.md",
+    "System Design/Network Protocols.md",
+    "Pasted.md",
+    "Databricks/Databricks.md",
     "Excalidraw/Data Modeling.md",
     "Data Engineering/Data Modeling - Dimensional Data Model.md",
-    "attachments/Pasted image 20260504225113.png",
-    "attachments/Pasted image 20260504224939.png",
-    "attachments/Pasted image 20260504224611.png",
-    "attachments/Pasted image 20260504221841.png",
-    "attachments/Pasted image 20260504221754.png",
-    "attachments/Screenshot from 2026-05-04 22-16-30.png",
-    "attachments/Pasted image 20260504221336.png",
-    "attachments/Screenshot from 2026-05-04 19-15-55.png",
-    "attachments/Screenshot from 2026-05-04 19-13-27.png",
-    "attachments/Screenshot from 2026-05-04 19-13-05.png",
+    "2python/1python Practice.md",
     "Excalidraw/Apache Spark 2026-01-19 19.23.53.excalidraw.md",
-    "Data Engineering/weather_ETL.md",
     "Cloud Computing/Cloud Computing Upgrad/AWS  - Data Engineering Project.md",
     "Data Engineering/Open Table Format - Apache Iceberg.md",
-    "Databricks/Databricks.md",
     "1SQL/SQL Execution Order.md",
-    "PySpark/Apache Spark 2.md",
-    "PySpark/Apache Spark.md",
     "PySpark/JVM Memory - Stacks and Heaps.md",
     "Excalidraw/Programming Fundamentals.md",
-    "FastAPI/Fast API - 2.md",
-    "1SQL/Group By vs Window Function.md",
-    "2python/pathlib.md",
-    "FastAPI/Fast API - 1.md",
     "2python",
-    "1SQL/SQL Pointer.md",
-    "Excalidraw/AWS - Data Engineering.md",
-    "Networking Fundamentals/HTTP - Hyper Text Transfer Protocol.md",
-    "Networking Fundamentals/Index.md",
     "1SQL",
-    "FastAPI/Authentication Flow.md",
-    "Data Engineering/Data Engineering Fundamentals.md",
-    "Excalidraw/FastAPI.md",
-    "Networking Fundamentals/OSI Model.md",
-    "Networking Fundamentals/Network Devices.md",
     "Deep Learning",
     "Machine Learning/SVM",
     "EDML",

@@ -671,5 +671,115 @@
 
 ### AWS CodeArtifact
 
-- Software packages depend on each other to be built
-- 
+- Software packages depend on each other to be built on other backages
+- Storing these packages/dependencies is called **artifact Management**.
+- CodeArtifact is secure, scalable, and cost - effective artifact management.
+- Works with dependency management tools like
+	- Maven
+	- Gradle
+	- npm
+	- yarn
+
+### AWS Systems Manager ( SSM )
+
+- Helps you manage your EC2 and On Premises systems at scale
+- Hybrid AWS service
+- Exam Perspective:
+	- Service to patch fleet of EC2 or On premise server
+
+### Systems Manager - SSM Session Manager
+
+- Allows you tu start a secure shell on you EC2 and on premises servers
+- ![](../../attachments/Pasted%20image%2020260507173526.png)
+- We can access EC2 instance without enabling SSH  traffic while creating EC2 instance
+	- SSH traffic required for SSH key login
+	- SSH traffic required for EC2 Instance Connect
+### System Manager Parameter Store
+
+- Secure storage for configuration and secrets
+- API Keys, password, configurations
+- Serverless, scalable ,durable
+- ![](../../attachments/Pasted%20image%2020260507174216.png)
+
+
+### Global Application
+
+- Deploying application in Multiple Geographies
+	- Decreased Latency
+	- Disaster Recovery ( DR )
+	- Attack Protection
+
+### Global DNS : Route 53
+
+- Route53 is a Managed DNS
+- ![](../../attachments/Pasted%20image%2020260507180100.png)
+- Route53 Routing Policies
+	- Simple Routing Policy
+		- ![](../../attachments/Pasted%20image%2020260507180157.png)
+	- Weighted Routing Policy
+		- Type of Load Balancing
+		- ![](../../attachments/Pasted%20image%2020260507180223.png)
+	- Latency Routing Policy
+		- Latency based Routing
+		- ![](../../attachments/Pasted%20image%2020260507180308.png)
+	- Failover Routing Policy
+		- Disaster Based Routing
+		- ![](../../attachments/Pasted%20image%2020260507180327.png)
+
+### AWS CloudFront
+
+- CDN ( Content Delivery Network)
+	- Improves read performance, content is cached at the edge
+	- improves us preference
+	- ![](../../attachments/Pasted%20image%2020260507181315.png)
+-  CloudFront Origin
+	- S3 Bucket
+		- For distributing files and caching them at the edge
+		- Uploading files to S3 through CloudFront
+	- VPC Origin
+		- For applications hosted in VPC private subnet
+	- Custom Origin 
+- ![](../../attachments/Pasted%20image%2020260507181759.png)
+- ![](../../attachments/Pasted%20image%2020260507181906.png)
+### S3 Transfer Acceleration
+
+- Increase transfer speed by transferring file to an AWS edge location which will forward the data to the S3 bucket in the target region.
+- ![](../../attachments/Pasted%20image%2020260507182557.png)
+- When you want to quickly upload and download files to S3.
+
+### AWS Global Accelerator
+
+- Traffic firsts connects to edge location and then to the main Region
+- NO Caching
+- Only proxting packets at edge to the application server
+
+- ![](../../attachments/Pasted%20image%2020260507182836.png)
+- ![](../../attachments/Pasted%20image%2020260507182910.png)
+
+
+### AWS Outposts
+
+- For - Hybrid Cloud
+- AWS Outposts are server racks that offer the same AWS Infrastructure, services, APIs  and toosl to build your own applications on - premises just as in cloud
+- AWS will setup and maange the OutPOST racks withing your on prem infra and you can use AWS services on prem
+- Physical Responsibility is upto the user.
+- ![](../../attachments/Pasted%20image%2020260507183621.png)
+
+### AWS Wavelength
+
+- 5G - services with 5G
+- Ultra Low latency application through 5G networks
+
+### AWS Local Zones
+
+- Place AWS compute , storage, database, and other selected AWS services close to end users to run latency sensitive application
+- Extension of AWS Region
+
+
+### AWS Global Architecture
+
+- Single Region - Single Zone
+- Multi region - Active - Passive
+	- ![](../../attachments/Pasted%20image%2020260507184610.png)
+- Multi Region - Active-Active
+	- ![](../../attachments/Pasted%20image%2020260507184625.png)

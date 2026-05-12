@@ -214,4 +214,25 @@
 		- ![](../attachments/Screenshot%20from%202026-04-14%2021-11-44.png)
 	- Now we only need to call the login API everytime to access the Token and no need to copy it as it will automatically copy it
 	- The Postman script will do this automatically
-	
+
+
+### JOINS 
+
+- Adding Foreign Key in `posts2` - Table
+
+- **Model Schema**
+```python
+class Posts(Base):
+
+	__tablename__ = "posts2"
+	id = Column(Integer, primary_key=True, nullable=False)
+	title = Column(String, nullable=False)
+	content = Column(String, nullable=False)
+	published = Column(Boolean, server_default="TRUE", nullable=False)
+	created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text("now()"))
+	owner_id = Column(Integer, ForeignKey("user_id", ondelete="CASCADE"), nullable=False)
+```
+
+- **NOTE: SQLalchemy does NOT modifies a new Table schema, it just maps the data to a Database table**
+- New table is only created if `Base.metadata.create_all(bind=engine)` is set
+

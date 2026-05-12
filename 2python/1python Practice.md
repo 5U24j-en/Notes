@@ -1,0 +1,4 @@
+- sorted()
+- dictionary
+- Binary Search
+- lambda functions
