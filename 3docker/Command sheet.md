@@ -1,6 +1,11 @@
 
-- `docker ps -a`
-	- ps ( docker processes )  , -a all the processes
+- `docker start {container name}`
+	- Will run stopped containers
 - `docker run -it {anything}`
-	- This will open the Application shell 
+	- This will op.en the Application shell 
 	- Like Node js shell
+- `docker ps -a`
+	- List all the processes
+	- Even container which were stoped/terminated
+- `docker run -p 8000:80 <container>`
+- 
