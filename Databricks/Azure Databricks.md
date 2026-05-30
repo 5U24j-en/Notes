@@ -36,11 +36,14 @@
 - ![](../attachments/Pasted%20image%2020260526183533.png)
 - First we Create Compute
 - **This is the Control Plane**
+
 - ### Unity Catalog
 
 	- You can govern all the credentials, lineage, audits, data tags , etc
 	- ![](../attachments/Screenshot%20from%202026-05-26%2018-40-59.png)
+
 	- #### Metastore
+
 		- Metadata: Data about data
 		- All the Metadata is stored under **Metastore**
 		- With Unity Catalog , all the information in Unity Catalog is stored in 1 Metastore
@@ -53,7 +56,7 @@
 				- First Databricks Workspace is created and then it is connected to the Unity Metastore
 					- Hive is the legacy Metastore
 					- ![](../attachments/Pasted%20image%2020260526192759.png)
-			- **Catalog** is the main group
+			- **Catalog** is the group
 				- **Schema** is like a DB
 					- Tables
 					- Views
@@ -120,11 +123,29 @@
 					- External services having access to the Storage
 				- Managed Identity - Non Human Access
 					- Azure Managed service getting the access, this access credentials are managed by Azure
-			 - ##### Now we create the Metastore
+
+		 - ### Now we create the Metastore In Databricks
+		 
 			 - ![](../attachments/Pasted%20image%2020260527153317.png)
-			 - **ADLS Gen 2 path Format =** ` <container_name>@<storage_account_name>.dfs.core.windows.net/ `
-			 - Access Connector ID is found in the Access connector description
-			 - After Assigning workspace , which is our Resource Group, now it is connected 
+				 -  **ADLS Gen 2 path Format =** ` <container_name>@<storage_account_name>.dfs.core.windows.net/ `
+				 - Access Connector ID is found in the Access connector description
+				 - After Assigning workspace , which is our Resource Group, now it is connected 
+
+			 - ![](../attachments/Pasted%20image%2020260529150654.png)
+
+			 - #### Managed Tables
+				 - The Metastore will hold the Metadata of the Managed tables
+					 -  Unity Catalog (Metastore) stores the **metadata** of managed tables.
+					- The actual table data is stored in the **managed location** configured for the metastore, catalog, or schema (typically an ADLS Gen2 container).
+				 - The Main Difference between Managed table and External table is that
+					 - If we delete a managed table in Databricks workspace , the Metadata AND the DATA itself is Deleted from the container
+					 - If we delete a External Table only the Meta data is deleted.
+
+			- #### External Table
+				- Unity Catalog manages only the metadata.
+				- The data already exists in an external storage location.
+				- If an external table is dropped: Only the metadata is deleted
+
 
 
 	- ### Creating Compute
@@ -133,7 +154,7 @@
 		- Compute Created by Databricks resource group -> ` sndatabricksrg `:
 			- ![](../attachments/Screenshot%20from%202026-05-27%2015-54-48.png)
 
-		- User - surajnair3840@gmail.com
+		- User - suraj@surajnair3840gmail.onmicrosoft.com
 			-  Workspace
 				- **Folder -**  sn-data-pipeline
 					- Create Notebook
@@ -199,7 +220,7 @@
 					↓
 				Azure Data Lake Storage (ADLS Gen2)
 		
-	- External Location
+	- ### External Location
 		- ![](../attachments/Pasted%20image%2020260527165429.png)
 		- #### WE need to create new Credentials
 		- ![](../attachments/Pasted%20image%2020260527165518.png)
@@ -208,4 +229,160 @@
 		- External Location Should be referenced to the **Container Level.**
 			- ![](../attachments/Screenshot%20from%202026-05-27%2017-27-25.png)
 			- ` abfss://<container_name>@<storage_account_name>.dfs.core.windows.net/ `
-			- 
+			- External Location Created
+
+	- ### Managed Catalog
+		
+		- Managed Schema
+		- Managed table
+			- Data is stored in the Metastore managed Table 
+				- **Storage Account:** `sndatabrickspipeline`
+				- **Container:** ` sn-metastore-root `
+			- Structure
+				- Catalog
+					- Schema ( similar DB )
+						- Table
+		- CODE
+
+**Catalog**
+```sql
+CREATE CATALOG managed_catalog;
+```
+
+**Schema**
+```sql
+CREATE SCHEMA managed_catalog.managed_schema;
+```
+
+**Table**
+```sql
+CREATE TABLE managed_catalog.managed_schema.managed_table
+(
+	id INT,
+	name STRING
+)
+USING DELTA;
+```
+- 
+	- 
+		- The Data is stored in the - ` sn-metastore-root `
+		- ![](../attachments/Pasted%20image%2020260529162742.png)
+		- ![](../attachments/Pasted%20image%2020260529162841.png)
+		- **Empty Delta Table**
+
+	- ### External Catalog
+	
+		- Managed Schema
+		- Managed Table
+			- Data will be stored in Our container ( External Location )
+				- **Storage Account:** ` sndatabrickspipeline `
+				- **Container:** ` data-container `
+		- CODE
+
+External Catalog
+```sql
+CREATE CATALOG ext_catalog
+MANAGED LOCATION 'abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/external_catalog'
+```
+
+Managed Schema
+```sql
+CREATE SCHEMA ext_catalog.managed_schema;
+```
+
+Managed Table
+```sql
+CREATE TABLE ext_catalog.managed_schema.managed_table2
+(
+	id INT,
+	name STRING
+)
+USING DELTA;
+```
+- 
+	- 
+		- The data is stored in - ` data-container `
+		- ![](../attachments/Pasted%20image%2020260529164010.png)
+		- ![](../attachments/Pasted%20image%2020260529164108.png)
+
+		- #### External Schema - 
+```sql
+CREATE SCHEMA ext_catalog.external_schema
+MANAGED LOCATION 'abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/external_schema';
+```
+- 
+	- 
+		- Data is still stored in the ` data-container `
+		- ![](../attachments/Pasted%20image%2020260529164817.png)
+
+- **NOTE: External Table if defined , will be stored in that defined location , And rest , Catalog and Schema will be in the same location**
+```sql
+CREATE TABLE managed_catalog.managed_schema.managed_table3
+(
+	id INT,
+	name STRING
+)
+USING DELTA
+LOCATION `abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/external_table/table4`
+```
+- Location
+	- ![](../attachments/Pasted%20image%2020260529165454.png)
+	- ![](../attachments/Pasted%20image%2020260529165514.png)
+
+
+### Dropping Table
+
+	- Dropping Managed table from Managed schema and managed catalog
+	- Storage location - ` sn-metastore-root `
+
+```sql
+DROP TABLE managed_catalog.managed_schema.managed_table;
+```
+- 
+	- #### Managed tables are deleted after 7 days
+	- We can Un-drop / Restore the tables as well
+```sql
+UNDROP TABLE managed_catalog.managed_schema.managed_table;
+```
+
+### Inserting Data
+
+```sql
+INSERT INTO managed_catalog.managed_schema.external_table
+VALUES
+(1, 'abc'),
+(2, 'test'),
+(3, 'okay'),
+(4, 'Data')
+```
+
+### Directly Querying Data
+
+```sql
+SELECT * FROM delta.`abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/external_table/table4`;
+```
+
+### Permanent Views
+
+```sql
+CREATE VIEW managed_catalog.managed_schema.view1
+AS
+SELECT * FROM delta.`abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/external_table/table4`
+WHERE id = 1;
+```
+- ![](../attachments/Pasted%20image%2020260529171524.png)
+
+### Temporary Views
+
+```sql
+CREATE OR REPLACE TEMP VIEW temp_view
+AS
+SELECT * FROM delta.`abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/external_table/table4`
+WHERE id = 1;
+```
+- These Views will go away  once compute is detached
+
+
+## Volumes
+
+- 
