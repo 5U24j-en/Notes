@@ -31,7 +31,7 @@
 		- Create Resource and launch Databricks
 
 
-## Azure Databricks
+## Azure Data-bricks
 
 - ![](../attachments/Pasted%20image%2020260526183533.png)
 - First we Create Compute
@@ -149,9 +149,9 @@
 
 
 	- ### Creating Compute
-		- Creating Compute in Databricks
+		- Creating Compute in Data-bricks
 			- ![](../attachments/Screenshot%20from%202026-05-27%2015-43-42.png)
-		- Compute Created by Databricks resource group -> ` sndatabricksrg `:
+		- Compute Created by Data-bricks resource group -> ` sndatabricksrg `:
 			- ![](../attachments/Screenshot%20from%202026-05-27%2015-54-48.png)
 
 		- User - suraj@surajnair3840gmail.onmicrosoft.com
@@ -385,4 +385,193 @@ WHERE id = 1;
 
 ## Volumes
 
+- Volumes are Unity Catalog objects representing a logical volume of storage in a cloud object storage location
+- While Tables provide governance over tabular datasets, **Volumes add governance over non-tabular datasets**
+- Volumes can be used to access files in any format, including structured, semi-structured and unstructured data.
+- **Path Format**:
+	- ` /Volumes/<catalog_name>/<schema_name>/<volume_name>/<path>/<file_name> `
+
+- ##### Creating a Directory - ` dbutils.fs.mkdirs('abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/Volumes') `
+	- We have created a new Folder -  ` Volumes ` in the container - ` data-container ` , storage account - ` sndatabricks ` 
+	- We have also manually created a **` source `** folder which has a file Sales
+		- ![](../attachments/Pasted%20image%2020260531183441.png)
+
+- ### External Volume
+
+```sql
+CREATE EXTERNAL VOLUME managed_catalog.managed_schema.myvolume
+LOCATION 'abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/Volumes'
+```
+- **Result**
+	- ![](../attachments/Pasted%20image%2020260531183908.png)
+
+- ##### Copying Files - ` dbutils.fs.cp('sources_path', 'destination_path') `
+	- Sample - ` dbutils.fs.cp('abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/source/Sales', 'abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/Volumes/Sales')  `	
+	- ![](../attachments/Pasted%20image%2020260531184538.png)
+
+- Now since we have Created a Volume and Added the required paths to Data-bricks Catalog, we can now query and govern the unstructured data in Volumes
+```sql
+SELECT * FROM csv.`/Volumes/managed_catalog/managed_schema/myvolume/Sales`
+```
+- **Output**
+	- ![](../attachments/Pasted%20image%2020260531184938.png)
+
+
+## Delta Lake
+
+- Creating External Table under Managed Catalog and Managed Schema
+- We created a new folder :-  deltatable in the same container - ` data-container ` 
+```sql
+CREATE TABLE managed_catalog.managed_schema.delta_table1
+(
+	id INT,
+	name STRING,
+	city STRING
+)
+USING DELTA
+LOCATION 'abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/deltatable/deltatbl1'
+```
+- ![](../attachments/Pasted%20image%2020260531190459.png)
+- ### **Inserting Data**
+```sql
+INSERT INTO managed_catalog.managed_schema.delta_table1
+VALUES
+(1, 'aa', 'delhi'),
+(2, 'bb', 'mumbai'),
+(12, 'cc', 'moscow'),
+(13, 'dd', 'bengaluru'),
+(14, 'ee', 'texas'),
+(15, 'ff', 'paris'),
+(16, 'gg', 'london'),
+(17, 'hh', 'singapore'),
+(18, 'ii', 'macau'),
+(19, 'jj', 'shangai'),
+(10, 'kk', 'cincinati')
+```
+- Getting Extended Data of the Table
+```sql
+DESCRIBE EXTENDED managed_catalog.managed_schema.delta_table1
+```
+- Output
+	- ![](../attachments/Pasted%20image%2020260531191827.png)
+- ###  UPDATING TABLE ( DML )
+```sql
+UPDATE managed_catalog.managed_schema.delta_table1
+SET city = 'toronto'
+WHERE id = 10
+```
+
+- ### Viewing Versions
+```sql
+DESCRIBE HISTORY managed_catalog.managed_schema.delta_table1
+```
+- 
+	- ![](../attachments/Pasted%20image%2020260601164555.png)
+
+
+- ### Time Travel
+```sql
+RESTORE managed_catalog.managed_schema.delta_table1 TO VERSION AS OF 2
+```
+
+- ### OPTIMIZE 
+```sql
+OPTIMIZE managed_catalog.managed_schema.delta_table1
+```
+
+- ### DEEP CLONE vs SHALLOW CLONE
+	- ##### Deep Clone
+		- It clones the Meta Data and Data
+```sql
+CREATE TABLE managed_catalog.managed_schema.deep_clone
+DEEP CLONE managed_catalog.managed_schema.delta_table1
+```
+- 
+	- ##### Shallow Clone
+		- It only clones the meta data
+		- Only delta log is copied
+```sql
+CREATE TABLE managed_catalog.managed_schema.deep_clone
+SHALLOW CLONE managed_catalog.managed_schema.delta_table1
+```
+
+- ### AUTO - LOADER
+	- Incremental Loading
+	- Checkpoint
+		- schema or source
+		- checkpoint with folder name as source ( in the destination container )
+
+```python
+from pyspark.sql.functions import *
+
+df = spark.readStream.format('cloudfiles') \
+		.option('cloudFiles.format', 'parquet') \
+		.option('cloudFiles.schemaLocation', 'abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/autosink/check') \
+		.load('abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/autosource')
+
+df.writeStream.format('parquet') \
+	.option('checkpointLocation', 'abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/autosink/check') \
+	.trigger(processingTime='10 seconds') \	
+	.start('abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/autosink/data')
+```
+
+Output:
+	![](../attachments/Pasted%20image%2020260601171720.png)
+```json
+{
+  "id" : "d719df94-9deb-4266-b121-f32ef4e35350",
+  "runId" : "9e287906-4a15-4936-97b6-ec87e3c54617",
+  "name" : null,
+  "timestamp" : "2026-06-01T11:47:30.001Z",
+  "batchId" : 1,
+  "batchDuration" : 3,
+  "numInputRows" : 0,
+  "inputRowsPerSecond" : 0.0,
+  "processedRowsPerSecond" : 0.0,
+  "durationMs" : {
+    "latestOffset" : 2,
+    "triggerExecution" : 3
+  },
+  "stateOperators" : [ ],
+  "sources" : [ {
+    "description" : "CloudFilesSource[abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/autosource]",
+    "startOffset" : {
+      "seqNum" : 3,
+      "sourceVersion" : 3,
+      "lastBackfillStartTimeMs" : 1780314325655,
+      "lastBackfillFinishTimeMs" : 1780314330787,
+      "lastInputPath" : "abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/autosource"
+    },
+    "endOffset" : {
+      "seqNum" : 3,
+      "sourceVersion" : 3,
+      "lastBackfillStartTimeMs" : 1780314325655,
+      "lastBackfillFinishTimeMs" : 1780314330787,
+      "lastInputPath" : "abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/autosource"
+    },
+    "latestOffset" : null,
+    "numInputRows" : 0,
+    "inputRowsPerSecond" : 0.0,
+    "processedRowsPerSecond" : 0.0,
+    "metrics" : {
+      "isBacklogComputationComplete" : "true",
+      "numBytesOutstanding" : "0",
+      "numFilesOutstanding" : "0"
+    }
+  } ],
+  "sink" : {
+    "description" : "FileSink[abfss://data-container@sndatabrickspipeline.dfs.core.windows.net/autosink/data]",
+    "numOutputRows" : -1
+  }
+}
+```
+
+- This task will keep on running
+- If we upload a new file , it will copy that file as well
+
+## Jobs and Pipelines
+
+- ![](../attachments/Pasted%20image%2020260601172344.png)
+- ![](../attachments/Pasted%20image%2020260601172648.png)
+- ![](../attachments/Pasted%20image%2020260601172705.png)
 - 

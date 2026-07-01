@@ -4,37 +4,65 @@
     "type": "split",
     "children": [
       {
-        "id": "f4f4f3124e876b29",
+        "id": "a2f03b6b094a927f",
         "type": "tabs",
         "children": [
           {
-            "id": "b554ae8be59b702e",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw/Azure Databricks.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Azure Databricks"
-            }
-          },
-          {
-            "id": "9cb0db1e6187fb74",
+            "id": "0326f1b95631b27a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Data Engineering/Apache Airflow.md",
+                "file": "Data Engineering/Open Table Format  - Delta Table.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Apache Airflow"
+              "title": "Open Table Format  - Delta Table"
+            }
+          },
+          {
+            "id": "43d6edb9e92aa586",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Data Engineering/Project_Uber.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Project_Uber"
+            }
+          },
+          {
+            "id": "9a1f6859c8e4ce4d",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw/Uber Project.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Uber Project"
+            }
+          },
+          {
+            "id": "18ac3798cb75cbce",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PySpark/PySpark Streaming.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "PySpark Streaming"
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -92,7 +120,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 290.5
+    "width": 201.5
   },
   "right": {
     "id": "dbc762cc5a1c217d",
@@ -197,45 +225,47 @@
       "webpage-html-export:Export as HTML": false
     }
   },
-  "active": "9cb0db1e6187fb74",
+  "active": "18ac3798cb75cbce",
   "lastOpenFiles": [
-    "Databricks/Azure Databricks.md",
-    "Data Engineering/Apache Airflow.md",
-    "attachments/Pasted image 20260529171524.png",
-    "attachments/Pasted image 20260529165514.png",
-    "attachments/Pasted image 20260529165454.png",
-    "attachments/Pasted image 20260529164817.png",
-    "attachments/Pasted image 20260529164108.png",
-    "attachments/Pasted image 20260529164010.png",
-    "attachments/Pasted image 20260529162841.png",
-    "attachments/Pasted image 20260529162742.png",
-    "attachments/Pasted image 20260529150654.png",
-    "Excalidraw/Azure Databricks.md",
-    "attachments/Pasted Image 20260529150410_200.png",
-    "3docker/Docker Volumes.md",
-    "3docker/Docker Basics.md",
-    "Data Engineering/Data Engineering Fundamentals.md",
-    "Excalidraw/Databricks Project.md",
-    "Databricks/Project.md",
+    "attachments/Pasted image 20260630220124.png",
+    "attachments/Pasted image 20260630202718.png",
+    "Excalidraw/Uber Project.md",
+    "PySpark/PySpark Streaming.md",
+    "Data Engineering/Project_Uber.md",
     "Data Engineering/Open Table Format  - Delta Table.md",
-    "Data Engineering/Open Table Format - Apache Iceberg.md",
-    "Data Engineering/Kafka.md",
-    "Data Engineering/Data Modeling - Dimensional Data Model.md",
-    "PySpark/Apache Spark.md",
-    "3docker/Command sheet.md",
-    "Excalidraw/Apache Spark 2026-01-19 19.23.53.excalidraw.md",
-    "Networking Fundamentals/OSI Model.md",
-    "Networking Fundamentals/Network Devices.md",
-    "Networking Fundamentals/HTTP - Hyper Text Transfer Protocol.md",
-    "Excalidraw/docker.md",
-    "3docker",
-    "Excalidraw/FastAPI.md",
-    "FastAPI/Fast API - 2.md",
+    "attachments/Pasted image 20260630195818.png",
+    "attachments/Pasted image 20260629200426.png",
+    "attachments/Pasted image 20260629200406.png",
+    "attachments/Pasted image 20260629163143.png",
+    "attachments/Pasted image 20260629163131.png",
+    "attachments/Pasted image 20260628201806.png",
+    "attachments/Pasted image 20260628201756.png",
+    "attachments/Pasted image 20260628201339.png",
+    "attachments/Pasted image 20260628201316.png",
     "FastAPI/Fast API - 1.md",
-    "PySpark/Apache Spark 2.md",
-    "Cloud Computing/Docker.md",
-    "Cloud Computing/Cloud Computing Upgrad/AWS CLF - C02 - part 2.md",
+    "Data Engineering/Data Modeling - Dimensional Data Model.md",
     "Cloud Computing/Cloud Computing Upgrad/AWS Cloud Practitioner.md",
+    "Cloud Computing/Cloud Computing Upgrad/AWS CLF - C02 - part 2.md",
+    "Databricks/Azure Databricks.md",
+    "PySpark/Apache Spark 2.md",
+    "2python/pyspark.md",
+    "PySpark/Apache Spark.md",
+    "Excalidraw/Databricks Project.md",
+    "Excalidraw/Delta Lake.md",
+    "MLOps/upgrad/MLOPS - GCP session.md",
+    "MLOps/upgrad/MLOps.md",
+    "Excalidraw/FastAPI.md",
+    "MLOps/upgrad",
+    "MLOps/Untitled.md",
+    "Data Engineering/weather_ETL_apiutil.md",
+    "MLOps",
+    "2python/py-threading.md",
+    "FastAPI/Fast API - 2.md",
+    "Excalidraw/Azure Databricks.md",
+    "Excalidraw/kafka.md",
+    "Data Engineering/Kafka.md",
+    "Data Engineering/Untitled.md",
+    "3docker",
     "2python",
     "1SQL",
     "Deep Learning",
@@ -244,8 +274,6 @@
     "DSA",
     "Databricks",
     "Untitled.canvas",
-    "Untitled.base",
-    "Untitled 1.canvas",
-    "Data Engineering"
+    "Untitled 1.canvas"
   ]
 }

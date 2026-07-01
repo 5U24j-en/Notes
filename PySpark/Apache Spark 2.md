@@ -312,3 +312,21 @@ df3=df2.groupBy()
 	- **OFF_HEAP**
 		- We can use OFF_HEAP memory instead of RAM 
 		- Note GC wont work , we need to maintain the memory
+
+
+Optimizing
+
+
+
+Eventbridge
+Lambda 
+Eventbridge
+Glue Scheduler
+
+Connection string , 
+
+Handling Null Values
+
+Bucket name will be -  Partition based on functionality
+
+How does the pipeline job is triggered in Azure

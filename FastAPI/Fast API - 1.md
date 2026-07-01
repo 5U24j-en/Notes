@@ -5,8 +5,8 @@ Video: https://youtu.be/0sOvCWFmrtA?si=ZLZ0BLEG7vqej5Z9
 
 
 **Step 1:**  Creating Environment of environment name ==venv==
- ``` 
- python -m venv venv 
+ ``` bash
+ python -m venv .venv 
  ```
 - The above creates a environment folder
 - ![[Screenshot from 2026-03-12 17-08-01.png]]
@@ -15,7 +15,7 @@ Video: https://youtu.be/0sOvCWFmrtA?si=ZLZ0BLEG7vqej5Z9
 **Step 2:**  Starting the Environment
 - To run the environment there is a activate file in bin.
 - ![[Pasted image 20260312172246.png]]
-```
+```bash
 source .venv/bin/activate
 ```
 
@@ -24,11 +24,11 @@ source .venv/bin/activate
 
 
 **Step 4:**  Install `fastapi` framework and `uvicorn` web server.
-```
+```bash
 pip install fastapi uvicorn
 ```
 OR
-```
+```bash
 pip install fastapi[all]
 ```
 
